@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Vita AI — Inclusive Assistive Agent</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="brand">
+      <h1>Vita AI</h1>
+      <p class="tagline">Multimodal Assistive Agent for Blind • Deaf • Mute Users</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <nav class="primary-nav">
+      <button class="nav-btn" data-target="blind">For Blind</button>
+      <button class="nav-btn" data-target="mute">For Mute</button>
+      <button class="nav-btn" data-target="deaf">For Deaf</button>
+    </nav>
+
+    <!-- BLIND USERS -->
+    <section id="blind" class="panel" hidden>
+      <h2>Assist Tools — Blind Users</h2>
+
+      <!-- IMAGE RECOGNITION -->
+      <div class="card">
+        <h3>Image → Contextual Summary + Audio</h3>
+        <input id="imageUpload" type="file" accept="image/*" />
+        <div class="controls">
+          <button id="analyzeImageBtn">Analyze Image</button>
+          <button id="stopAudioBtn">Stop Audio</button>
+        </div>
+        <div id="imageStatus" class="status"></div>
+        <pre id="imageXAI" class="xai"></pre>
+        <div id="imageResult" class="result"></div>
+      </div>
+
+      <!-- OCR -->
+      <div class="card">
+        <h3>OCR (Image to Text)</h3>
+        <input id="textImageUpload" type="file" accept="image/*" />
+        <button id="extractTextBtn">Extract Text</button>
+        <div id="textStatus" class="status"></div>
+        <pre id="textResult" class="result"></pre>
+      </div>
+
+      <!-- LOCATION -->
+      <div class="card">
+        <h3>Real-Time Location</h3>
+        <button id="getLocationBtn">Find my Location</button>
+        <div id="locationStatus" class="status"></div>
+        <pre id="locationResult" class="result"></pre>
+      </div>
+    </section>
+
+    <!-- MUTE USERS -->
+    <section id="mute" class="panel" hidden>
+      <h2>Assist Tools — Mute Users</h2>
+
+      <div class="card">
+        <label>Language</label>
+        <select id="languageSelectMute">
+          <option value="en-US">English</option>
+          <option value="hi-IN">Hindi</option>
+        </select>
+
+        <textarea id="textInput" placeholder="Type your message..."></textarea>
+        <div id="suggestions" class="suggestions"></div>
+
+        <div class="controls">
+          <button id="speakBtn">Speak</button>
+          <button id="showQuickBtn">Quick Phrases</button>
+        </div>
+
+        <div id="quickPhrases" class="quick-list" hidden>
+          <button class="quick" data-text="Hello! How can I help you?">Hello! How can I help you?</button>
+          <button class="quick" data-text="I need assistance.">I need assistance.</button>
+          <button class="quick" data-text="Excuse me please.">Excuse me please.</button>
+          <button class="quick" data-text="Thank you!">Thank you!</button>
+          <button id="closeQuick">Back</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- DEAF USERS -->
+    <section id="deaf" class="panel" hidden>
+      <h2>Assist Tools — Deaf Users</h2>
+
+      <div class="card">
+        <label>Language</label>
+        <select id="languageSelectDeaf">
+          <option value="en-US">English</option>
+          <option value="hi-IN">Hindi</option>
+        </select>
+
+        <div class="controls">
+          <button id="startSttBtn">Start Listening</button>
+          <button id="stopSttBtn">Stop</button>
+        </div>
+
+        <div id="sttStatus" class="status"></div>
+        <pre id="sttResult" class="result"></pre>
+        <div id="emotionLabel" class="emotion"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>© <span id="year"></span> Vita AI</p>
+    <p>Team: Pratik | Kalyani | Atharva</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
