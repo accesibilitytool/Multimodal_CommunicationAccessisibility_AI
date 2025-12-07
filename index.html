@@ -214,6 +214,7 @@
                 <h3>Advanced Live Google Vision Describer</h3>
                 <div class="feature">
                     <video id="video" autoplay></video><br>
+                    <button class="btn" onclick="switchCamera()">Switch Camera</button>
                     <button class="btn" id="startBtn">Start Describing</button>
                     <button class="btn" id="stopBtn">Stop Describing</button>
                 </div>
@@ -466,23 +467,45 @@
             reader.readAsDataURL(file);
         }
 
-        let video = document.getElementById("video");
-let intervalId = null;
+        let video = document.getElementById("video");let intervalId = null;
 let lastSentence = "";
+let currentFacingMode = "environment"; // back camera default
 
 // Open camera
 let stream = null;
 
 async function startCamera() {
-    if (stream) return; // already running
+    if (stream) {
+        stopCamera(); // clean stop before switching
+    }
 
     try {
-        stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        stream = await navigator.mediaDevices.getUserMedia({
+            video: {
+                facingMode: { ideal: currentFacingMode }
+            },
+            audio: false
+        });
+
         video.srcObject = stream;
+        video.setAttribute("playsinline", true);
+        await video.play();
+
     } catch (err) {
-        alert("Camera permission denied or not available.");
+        alert("Camera not accessible. Please allow permission.");
+        console.error(err);
     }
 }
+
+function switchCamera() {
+    currentFacingMode =
+        currentFacingMode === "environment"
+            ? "user"
+            : "environment";
+
+    startCamera();
+}
+
 
 // stop camera
 function stopCamera() {
@@ -554,7 +577,7 @@ function getShirtColor(canvas, box){
 }
 
 // Google Vision API call
-async function analyzeImage(base64Image){
+async function analyzeVideo(base64Image){
     const body = {
         requests: [
             {
@@ -613,7 +636,7 @@ document.getElementById("startBtn").onclick = () => {
     intervalId = setInterval(async () => {
         const base64 = getBase64FromVideo();
         try{
-            const result = await analyzeImage(base64);
+            const result = await analyzeVideo(base64);
             const canvas = document.createElement("canvas");
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
