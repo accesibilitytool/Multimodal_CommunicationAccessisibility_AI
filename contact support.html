@@ -1,0 +1,249 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inclusive AI App</title>
+    <style>
+        /* Add styles here (same as your existing styles) */body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #1a1a2e;
+            color: #e6e6e6;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        header {
+            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+            color: #00d4ff;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+            flex-grow: 1;
+        }
+
+        section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #21253a;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        section h2 {
+            color: #00ffab;
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        .feature {
+            margin: 15px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .feature input,
+        .feature button,
+        .feature textarea {
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #00d4ff;
+            background: #2d3448;
+            color: #e6e6e6;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        button {
+            background-color: #00d4ff;
+            color: #1a1a2e;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            font-size: 1.2rem;
+            padding: 15px;
+        }
+
+        button:hover {
+            background-color: #00ffab;
+            transform: scale(1.05);
+        }
+
+        .main-buttons {
+            display: flex;
+            justify-content: space-around;
+            margin: 50px 0;
+        }
+
+        .main-buttons button {
+            font-size: 1.5rem;
+            padding: 20px;
+            background-color: #00d4ff;
+            border: none;
+            width: 30%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .main-buttons button:hover {
+            background-color: #00ffab;
+            transform: scale(1.1);
+        }
+
+        footer {
+            text-align: center;
+            padding: 15px;
+            background: #0f2027;
+            color: #00d4ff;
+            font-size: 0.9rem;
+        }
+
+        .instructions {
+            font-style: italic;
+            color: #888;
+            margin-top: 5px;
+        }
+
+
+
+        <!--contact-->
+        header {
+        text-align: center;
+        padding: 40px 20px;
+        background: linear-gradient(90deg, #1B5E20, #4CAF50);
+        color: white;
+        border-radius: 12px;
+        margin-bottom: 40px;
+    }
+    header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+    header p { font-size: 1.1rem; }
+
+    .team-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .team-card {
+        background-color:lab(64.23% -35.15 -9.21);
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        width: 260px;
+        padding: 25px 20px;
+        text-align: center;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .team-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); color: var(--lime); }
+
+    .team-card img {
+        border-radius: 50%;
+        width: 120px; height: 120px;
+        object-fit: cover;
+        margin-bottom: 15px;
+    }
+
+    .team-card h3 { font-size: 1.3rem; margin-bottom: 5px; color: #1B5E20; }
+    .team-card p { font-size: 0.95rem; color: #666; margin-bottom: 15px; }
+
+    .contact-button {
+        background-color: #22244a;
+        color: white;
+        border: none;
+        padding: 10px 18px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.95rem;
+        transition: background-color 0.2s;
+        display: block;
+        margin: 0 auto;
+        text-decoration: none;
+    }
+    .contact-button:hover { background: linear-gradient(to right, #0f2027, #203a43, #2c5364); }
+
+    .helpline-info {
+        margin-top: 20px;
+        text-align: center;
+        font-size: 0.95rem;
+        color: #333;
+    }
+    .helpline-info a {
+        color: #1B5E20;
+        text-decoration: none;
+        font-weight: bold;
+        margin: 0 10px;
+    }
+    .helpline-info a:hover { text-decoration: underline; }
+    
+
+    
+
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Vita AI</h1>
+        <p>Empowering Accessibility Through Technology</p>
+    </header><br><br><br>
+<div class="team-container">
+    <div class="team-card">
+        <img src="jeevan.jpg" alt="Aditya Gore">
+        <h3>Milind Phadatare</h3>
+        <p>Support Specialist</p>
+        <a href="tel:+911234567890" class="contact-button">Call Now</a>
+        <a href="https://wa.me/9082471034" target="_blank" class="contact-button" style="margin-top:10px;">WhatsApp</a>
+    </div>
+
+    <div class="team-card">
+        <img src="pratik.jpg" alt="Pratik Nagargoje">
+        <h3>Pratik Nagargoje</h3>
+        <p>Technical Support</p>
+        <a href="tel:+911234567891" class="contact-button">Call Now</a>
+        <a href="https://wa.me/8010102088" target="_blank" class="contact-button" style="margin-top:10px;">WhatsApp</a>
+    </div>
+
+    <div class="team-card">
+        <img src="kal.jpg" alt="Kalyani Pucha">
+        <h3>Kalyani Pucha</h3>
+        <p>Customer Relations</p>
+        <a href="tel:+911234567892" class="contact-button">Call Now</a>
+        <a href="https://wa.me/7738572597" target="_blank" class="contact-button" style="margin-top:10px;">WhatsApp</a>
+    </div>
+</div>
+<br><br><br><br><br>
+    
+
+    <footer>
+        <p>&copy; 2024 Vita AI. Designed for accessibility and innovation.</p>
+        <p>Created with dedication by <strong>Pratik Rajendra Nagargoje</strong>, <strong>Kalyani Balaraju Pucha</strong>, and <strong>Milind Vijay Phadatare</strong>.</p>
+    </footer>
+  
+        
+</body>
+
+</html>
