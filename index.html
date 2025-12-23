@@ -1,7 +1,5 @@
 
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -133,6 +131,12 @@
             border-radius:12px; 
         }
 
+        muteVideo {
+            width:70%; 
+            margin-top:20px; 
+            border-radius:12px; 
+        }
+
         .btn { 
             margin:10px; 
             padding:12px 22px; 
@@ -239,6 +243,7 @@
                 <textarea id="textInput" placeholder="Type your message here..." aria-label="Message input"></textarea>
                 <button onclick="convertTextToSpeech()" aria-label="Speak message">Speak Message</button>
                 <button onclick="showMessages(), stopAudio()" aria-label="Quick Messages">Quick Messages</button>
+                <button onclick="showMuteVideo(), stopAudio()" aria-label="Quick Messages">Express through Gestures</button>
             </div>
             <section id="preset-messages" style="display:none;" >
                 <h2>Quick Messages</h2>
@@ -251,6 +256,16 @@
                     <button style="align-self: center;background-color: #8fc5ce; " onclick="backMessages()" aria-label="Back">Back</button>
                 </div>
             </section>
+            <<div id="muteVideoid" style="display:none;">
+  <h3>✋ Hand Sign to Voice (Live Demo)</h3>
+  <div class="feature">
+     <video id="muteVideo" width="640" height="480" autoplay style="display:none;"></video>
+
+      <canvas id="muteCanvas" width="640" height="480" style="border:2px solid #444; border-radius:10px;"></canvas>
+      <h2 id="outputText">Show gestures ✌️ 👍 ✋ ✋✋</h2>
+  </div>
+</div>
+
         </section>
 
         <!-- Deaf Users Section -->
@@ -282,7 +297,10 @@
         <p>Created with dedication by <strong>Milind Vijay Phadatare</strong>, <strong>Pratik Rajendra Nagargoje</strong>, and <strong>Kalyani Balaraju Pucha</strong>.</p>
     </footer>
 
-    <scr
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+
+    <script>
         // Function to navigate to different sections
         function navigateTo(section) {
             document.getElementById('blind').style.display = 'none';
@@ -317,7 +335,19 @@
         function showMessages() {
             document.getElementById('preset-messages').style.display = 'block';
             document.getElementById('textRecognitionSection').style.display = 'none';
+            document.getElementById('muteVideoid').style.display = 'none';
         }
+
+        function showMuteVideo() {
+            document.getElementById('muteVideoid').style.display = 'block';
+            document.getElementById('textRecognitionSection').style.display = 'none';
+            startGestureCamera();
+        }
+
+        function hideMuteVideo(){
+    document.getElementById('muteVideoid').style.display='none';
+    stopGestureCamera();
+}
 
         function backMessages() {
             document.getElementById('mute').style.display = 'block';
@@ -748,6 +778,90 @@ function getRealTimeLocation() {
             window.speechSynthesis.speak(speech);
         }
 
+        // Express through gesture feature for mute users
+
+        let gestureCamera = null;
+let lastSpokenGesture = "";
+
+function speakGesture(text){
+    if(text === lastSpokenGesture) return;
+    lastSpokenGesture = text;
+    const msg = new SpeechSynthesisUtterance(text);
+    msg.lang = "en-US";
+    window.speechSynthesis.speak(msg);
+}
+
+function countFingers(lm){
+    let f=0;
+    if(lm[4].x < lm[3].x) f++;    // Thumb
+    if(lm[8].y < lm[6].y) f++;    // Index
+    if(lm[12].y < lm[10].y) f++;  // Middle
+    if(lm[16].y < lm[14].y) f++;  // Ring
+    if(lm[20].y < lm[18].y) f++;  // Pinky
+    return f;
+}
+
+function startGestureCamera(){
+    const video = document.getElementById("muteVideo");
+    const canvas = document.getElementById("muteCanvas");
+    const ctx = canvas.getContext("2d");
+    const outputText = document.getElementById("outputText");
+
+    const hands = new Hands({
+        locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
+    });
+
+    hands.setOptions({
+        maxNumHands: 2,
+        modelComplexity: 1,
+        minDetectionConfidence: 0.75,
+        minTrackingConfidence: 0.75
+    });
+
+    hands.onResults(results => {
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        ctx.drawImage(results.image, 0,0,canvas.width,canvas.height);
+
+        if(!results.multiHandLandmarks) return;
+
+        if(results.multiHandLandmarks.length===2){
+            const f1 = countFingers(results.multiHandLandmarks[0]);
+            const f2 = countFingers(results.multiHandLandmarks[1]);
+            if(f1>=4 && f2>=4){
+                outputText.innerText="🆘 I need help";
+                speakGesture("I need help");
+                return;
+            }
+        }
+
+        if(results.multiHandLandmarks.length===1){
+            const f = countFingers(results.multiHandLandmarks[0]);
+            if(f===5){ outputText.innerText="🙏 Thank you"; speakGesture("Thank you"); }
+            else if(f===2){ outputText.innerText="✌️ Hello"; speakGesture("Hello"); }
+            else if(f===1){ outputText.innerText="👍 Yes"; speakGesture("Yes"); }
+            else { outputText.innerText="Show gestures ✌️ 👍 ✋ ✋✋"; lastSpokenGesture=""; }
+        }
+    });
+
+    gestureCamera = new Camera(video, {
+        onFrame: async()=>{ await hands.send({image:video}); },
+        width:640,
+        height:480
+    });
+
+    gestureCamera.start();
+}
+
+function stopGestureCamera(){
+    if(gestureCamera){
+        gestureCamera.stop();
+        gestureCamera=null;
+    }
+    window.speechSynthesis.cancel();
+}
+
+
+
         let recognition; // Declare recognition instance globally
 
 // Start Speech-to-Text for Deaf Users
@@ -817,5 +931,3 @@ function stopSpeechToText() {
 </body>
 
 </html>
-
-
